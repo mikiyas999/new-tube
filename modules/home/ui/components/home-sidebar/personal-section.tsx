@@ -7,6 +7,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useAuth, useClerk } from "@clerk/nextjs";
 import { HistoryIcon, ListVideoIcon, ThumbsUpIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -32,6 +33,8 @@ const item = [
   },
 ];
 const PersonalSection = () => {
+  const { isSignedIn } = useAuth();
+  const clerk = useClerk();
   const pathname = usePathname();
   return (
     <SidebarGroup>
@@ -43,7 +46,12 @@ const PersonalSection = () => {
                 tooltip={item.title}
                 asChild
                 isActive={pathname === item.url}
-                onClick={() => {}}
+                onClick={(e) => {
+                  if (!isSignedIn && item.auth) {
+                    e.preventDefault();
+                    return clerk.openSignIn();
+                  }
+                }}
               >
                 <Link
                   prefetch
