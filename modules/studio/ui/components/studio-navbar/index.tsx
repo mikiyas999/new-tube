@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import AuthButton from "@/modules/auth/ui/components/auth-button";
+import StudioUploadModal from "../studio-upload-modal";
 
 const StudioNavbar = () => {
   return (
@@ -21,6 +22,8 @@ const StudioNavbar = () => {
         {/* Search bar */}
         <div className="flex-1" />
         <div className="flex-shirk-0 items-center flex gap-4">
+          <StudioUploadModal />
+
           <AuthButton />
         </div>
       </div>

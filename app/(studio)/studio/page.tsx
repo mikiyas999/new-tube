@@ -1,7 +1,13 @@
+import { DEFAULT_LIMIT } from "@/constants";
+import StudioView from "@/modules/studio/ui/views/studio-view";
+import { trpc } from "@/trpc/server";
 import React from "react";
 
-const page = () => {
-  return <div>studio</div>;
-};
+async function page() {
+  void trpc.studio.getMany.prefetchInfinite({
+    limit: DEFAULT_LIMIT,
+  });
+  return <StudioView />;
+}
 
 export default page;
