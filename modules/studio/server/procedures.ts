@@ -2,7 +2,7 @@ import { db } from "@/db";
 import { z } from "zod";
 import { users, videos } from "@/db/schema";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
-import { and, desc, eq, lt, or } from "drizzle-orm";
+import { and, desc, eq, getTableColumns, lt, or } from "drizzle-orm";
 
 export const studioRouter = createTRPCRouter({
   getMany: protectedProcedure
@@ -21,7 +21,10 @@ export const studioRouter = createTRPCRouter({
       const { cursor, limit } = input;
       const { id: userId } = ctx.user;
       const data = await db
-        .select()
+        .select({
+          ...getTableColumns(videos),
+          user: users,
+        })
         .from(videos)
         .innerJoin(users, eq(videos.userId, users.id))
         .where(
