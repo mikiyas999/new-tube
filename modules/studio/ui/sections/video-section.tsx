@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table";
 import { DEFAULT_LIMIT } from "@/constants";
 import { snakeCaseToTitle } from "@/lib/utils";
+import { VideoThumbnail } from "@/modules/videos/ui/components/video-thumbnail";
 import { trpc } from "@/trpc/client";
 import { format } from "date-fns";
 import { Globe2Icon, LockIcon } from "lucide-react";
@@ -122,9 +123,14 @@ export const VideosSectionSuspenes = () => {
                   <TableRow className="cursor-pointer ">
                     <TableCell className="pl-6">
                       <div className="flex items-center gap-4 ">
-                        {/* <div className=" relative aspect-video w-36 shrink-0">
-                          video Tumbnail
-                        </div> */}
+                        <div className=" relative aspect-video w-36 shrink-0">
+                          <VideoThumbnail
+                            imageUrl={video.thumbnailUrl}
+                            previewUrl={video.previewUrl}
+                            title={video.title}
+                            duration={video.duration || 0}
+                          />
+                        </div>
                         <div className=" flex flex-col overflow-hidden gap-y-1">
                           <span className=" text-sm line-clamp-1">
                             {video.title}
@@ -153,15 +159,9 @@ export const VideosSectionSuspenes = () => {
                     <TableCell className=" text-sm truncate">
                       {format(new Date(video.createdAt), "d MMM yyyy")}
                     </TableCell>
-                    {/* <TableCell className="text-right">
-                      {video.viewCount}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      {video.commentCount}
-                    </TableCell>
-                    <TableCell className="text-right pr-6">
-                      {video.likeCount}
-                    </TableCell> */}
+                    <TableCell className="text-right">count</TableCell>
+                    <TableCell className="text-right">comment</TableCell>
+                    <TableCell className="text-right pr-6">like</TableCell>
                   </TableRow>
                 </Link>
               ))}
